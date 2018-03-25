@@ -1,6 +1,15 @@
 package IntroToHashMaps;
 
-public class LogSearch {
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.HashMap;
+
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+
+public class LogSearch implements ActionListener {
   /* 
 	 * Crate a HashMap of Integers for the keys and Strings for the values.
 	 * Create a GUI with three buttons. 
@@ -28,4 +37,59 @@ public class LogSearch {
 	 * 				is not in the list. 
 	 *
 	 * */
+	HashMap <Integer, String> h = new HashMap<Integer, String>();
+	public static void main(String[] args) {
+		LogSearch l = new LogSearch();
+		l.createGUI();
+	}
+	JFrame frame = new JFrame();
+	JPanel panel = new JPanel();
+	JButton b1 = new JButton();
+	JButton b2 = new JButton();
+	JButton b3 = new JButton();
+	
+	public void createGUI() {
+		frame.setVisible(true);
+		frame.setSize(500, 75);
+		frame.add(panel);
+		b1.setText("Add Entry");
+		b2.setText("Search by ID");
+		panel.add(b1);
+		panel.add(b2);
+		panel.add(b3);
+		b1.addActionListener(this);
+		b2.addActionListener(this);
+		b3.addActionListener(this);
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		// TODO Auto-generated method stub
+		if (e.getSource() == b1) {
+			String messageID = JOptionPane.showInputDialog("Please enter an ID");
+			String name = JOptionPane.showInputDialog("Now enter a name");
+			int ID = Integer.parseInt(messageID);
+			h.put(ID, name);
+		}
+		if (e.getSource() == b2) {
+			String enterStringID = JOptionPane.showInputDialog("Please enter an ID");
+			int enterID = Integer.parseInt(enterStringID);
+			for (int key: h.keySet()) {
+				if (enterID == key) {
+					JOptionPane.showMessageDialog(null, "That persons name is " + h.get(key));
+				}
+				else {
+					JOptionPane.showMessageDialog(null, "Person could not be found");
+				}
+			}
+		}
+		if (e.getSource() == b3) {
+			String displayName = "";
+			for(int key: h.keySet()) {
+				String name = h.get(key);
+				int nameID = key;
+				displayName += "ID: " + nameID + "Name: " + name;
+			}
+		}
+	}
 }

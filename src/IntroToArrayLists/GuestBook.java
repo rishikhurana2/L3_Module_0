@@ -36,6 +36,7 @@ public class GuestBook implements ActionListener {
 		button1.setText("Add Name");
 		button2.setText("View Names");
 		button1.addActionListener(this);
+		button2.addActionListener(this);
 	}
 	@Override
 	public void actionPerformed(ActionEvent e) {
@@ -45,9 +46,12 @@ public class GuestBook implements ActionListener {
 			names.add(inputName);
 		}
 		if (e.getSource() == button2) {
-			for(int i = 0; i < names.size(); i++) {
-				JOptionPane.showMessageDialog(null, names.get(i));
+			String guest = "";
+			for(int i = 0; i< names.size(); i++) {
+				int guestNumber = i+1;
+				guest += "Guest " + guestNumber + ": " + names.get(i) + "\n";
 			}
+			JOptionPane.showMessageDialog(null, guest);
 		}
 	}
 }
