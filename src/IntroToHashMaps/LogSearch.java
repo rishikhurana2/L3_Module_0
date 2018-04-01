@@ -47,6 +47,7 @@ public class LogSearch implements ActionListener {
 	JButton b1 = new JButton();
 	JButton b2 = new JButton();
 	JButton b3 = new JButton();
+	JButton b4 = new JButton();
 	
 	public void createGUI() {
 		frame.setVisible(true);
@@ -54,12 +55,17 @@ public class LogSearch implements ActionListener {
 		frame.add(panel);
 		b1.setText("Add Entry");
 		b2.setText("Search by ID");
+		b3.setText("View List");
+		b4.setText("Remove Entry");
 		panel.add(b1);
 		panel.add(b2);
 		panel.add(b3);
+		panel.add(b4);
 		b1.addActionListener(this);
 		b2.addActionListener(this);
 		b3.addActionListener(this);
+		b4.addActionListener(this);
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}
 
 	@Override
@@ -78,8 +84,8 @@ public class LogSearch implements ActionListener {
 				if (enterID == key) {
 					JOptionPane.showMessageDialog(null, "That persons name is " + h.get(key));
 				}
-				else {
-					JOptionPane.showMessageDialog(null, "Person could not be found");
+				if (!h.containsKey(key)) {
+					JOptionPane.showMessageDialog(null, "That person doesn't exist");
 				}
 			}
 		}
@@ -88,8 +94,19 @@ public class LogSearch implements ActionListener {
 			for(int key: h.keySet()) {
 				String name = h.get(key);
 				int nameID = key;
-				displayName += "ID: " + nameID + "Name: " + name;
+				displayName += "ID: " + nameID + " Name: " + name + "\n";
 			}
+			JOptionPane.showMessageDialog(null, displayName);
+		}
+		if (e.getSource() == b4) {
+			String IDremovalWords = JOptionPane.showInputDialog("Please enter the ID that needs to be removed");
+			int IDremoved = Integer.parseInt(IDremovalWords);
+					if (h.keySet().contains(IDremoved)) {
+						h.remove(IDremoved);
+					}
+					else if (!h.containsKey(IDremoved)) {
+						JOptionPane.showMessageDialog(null, "That ID is not on the list");
+					}
 		}
 	}
 }
