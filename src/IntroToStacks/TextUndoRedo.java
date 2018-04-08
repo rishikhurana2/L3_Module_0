@@ -2,6 +2,7 @@ package IntroToStacks;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.util.Stack;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -20,6 +21,7 @@ public class TextUndoRedo implements KeyListener {
 	 * off the Stack and added back to the JLabel.
 	 * 
 	 * */
+	Stack<Character> c = new Stack<Character>();
 	public static void main(String[] args) {
 		TextUndoRedo r = new TextUndoRedo();
 		r.createUI();
@@ -42,12 +44,24 @@ public class TextUndoRedo implements KeyListener {
 	@Override
 	public void keyPressed(KeyEvent e) {
 		// TODO Auto-generated method stub
-		char a = e.getKeyChar();
-		String textEditor = a + "";
-		label.setText(label.getText() + textEditor);
 		if (e.getKeyCode() == KeyEvent.VK_BACK_SPACE) {
+			String t = label.getText(); 
+			int textLength = t.length();
+			char deletedCharacter = t.charAt(textLength-1);
+			label.setText(t.substring(0,textLength-1));
+			//System.out.println(deletedCharacter+"");
+			c.push(deletedCharacter);
+		}
+		else if (e.getKeyCode()== KeyEvent.VK_R) {
+			char j = c.pop();
+			String r = j + "";
 			String t = label.getText();
-			label.setText(t.concat(""));
+			label.setText(t.concat(r));
+		}
+		else {
+			char a = e.getKeyChar();
+			String textEditor = a+"";
+			label.setText(label.getText() + textEditor);
 		}
 	}
 	@Override
